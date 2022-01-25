@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1ptby4k" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="runjob" name="run job" isExecutable="true">
+    <bpmn:startEvent id="start" name="start">
+      <bpmn:outgoing>Flow_0vyqk0f</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0vyqk0f" sourceRef="start" targetRef="getJenkinsName" />
+    <bpmn:serviceTask id="runJenkinsJob" name="Run Jenkins Jobs" camunda:class="com.tista.com.RunJenkinsJob">
+      <bpmn:incoming>Flow_0gypoc7</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wo9wnp</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="finish" name="finish">
+      <bpmn:incoming>Flow_1wo9wnp</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1wo9wnp" sourceRef="runJenkinsJob" targetRef="finish" />
+    <bpmn:sequenceFlow id="Flow_0gypoc7" sourceRef="getJenkinsName" targetRef="runJenkinsJob" />
+    <bpmn:userTask id="getJenkinsName" name="Get Jenkins Job Name">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="jenkinsJobName" label="Jenkins Job Name" type="string" defaultValue="Jenkins_job_one" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0vyqk0f</bpmn:incoming>
+      <bpmn:outgoing>Flow_0gypoc7</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="runjob">
+      <bpmndi:BPMNEdge id="Flow_0gypoc7_di" bpmnElement="Flow_0gypoc7">
+        <di:waypoint x="490" y="117" />
+        <di:waypoint x="650" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wo9wnp_di" bpmnElement="Flow_1wo9wnp">
+        <di:waypoint x="750" y="117" />
+        <di:waypoint x="922" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vyqk0f_di" bpmnElement="Flow_0vyqk0f">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="390" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="start">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="186" y="142" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mmgtf4_di" bpmnElement="getJenkinsName">
+        <dc:Bounds x="390" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01kgfgb_di" bpmnElement="runJenkinsJob">
+        <dc:Bounds x="650" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_08mwcmx_di" bpmnElement="finish">
+        <dc:Bounds x="922" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="927" y="142" width="26" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
