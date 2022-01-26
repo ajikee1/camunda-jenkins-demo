@@ -2,6 +2,8 @@ package com.tista.com;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class RunJenkinsJob implements JavaDelegate {
@@ -13,5 +15,13 @@ public class RunJenkinsJob implements JavaDelegate {
 
         String jobName = (String) delegateExecution.getVariable("jenkinsJobName");
         LOGGER.info(jobName);
+
+        TriggerJenkins triggerJenkins = new TriggerJenkins();
+        Map<String, String> map  = triggerJenkins.triggerJenkinsBuild(jobName);
+
+        for (Map.Entry<String,String> entry : map.entrySet()){
+            LOGGER.info("Key = " + entry.getKey());
+            LOGGER.info( "Value = " + entry.getValue());
+        }
     }
 }
